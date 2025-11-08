@@ -43,5 +43,5 @@ Match all pairs to win the game!
  
 
 Irfan Khan
-GitHub
- | LinkedIn
+GitHub : https://github.com/Irfan-lab700
+LinkedIn : www.linkedin.com/in/irfan-khan-92185031b
