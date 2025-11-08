@@ -1,13 +1,75 @@
-function showFinalMessage() {
+let startTime, endTime;
+let counter = 0;
+let firstSelection = "";
+let secondSelection = "";
+const cards = document.querySelectorAll(".cards .card");
+(function shuffleCards() {
+  const cardsContainer = document.querySelector(".cards");
+  const cardsArray = Array.from(cardsContainer.children);
+  cardsArray.sort(() => Math.random() - 0.5);
+  cardsArray.forEach(card => cardsContainer.appendChild(card));
+})();
+cards.forEach((card) => {
+  card.addEventListener("click", () => {
+    card.classList.add("clicked");
+    if (counter === 0) {
+      firstSelection = card.getAttribute("logo");
+      counter++;
+      if (!startTime) startTime = new Date();
+    } else {
+      secondSelection = card.getAttribute("logo");
+      counter = 0;
+      if (firstSelection === secondSelection) {
+        const correctCards = document.querySelectorAll(
+          ".card[logo='" + firstSelection + "']"
+        );
+        setTimeout(() => {
+          correctCards[0].classList.add("checked");
+          correctCards[0].classList.remove("clicked");
+          correctCards[1].classList.add("checked");
+          correctCards[1].classList.remove("clicked");
+          const allCards = document.querySelectorAll(".card").length;
+          const matchedCards = document.querySelectorAll(".card.checked").length;
+          if (allCards === matchedCards) {
+            endTime = new Date();
+            const totalTime = ((endTime - startTime) / 1000).toFixed(1);
+            updateBestTime(totalTime);
+            setTimeout(() => showFinalMessage(totalTime), 300);
+          }
+        }, 500);
+      } else {
+        const incorrectCards = document.querySelectorAll(".card.clicked");
+        incorrectCards[0].classList.add("shake");
+        incorrectCards[1].classList.add("shake");
+        setTimeout(() => {
+          incorrectCards[0].classList.remove("shake", "clicked");
+          incorrectCards[1].classList.remove("shake", "clicked");
+        }, 800);
+      }
+    }
+  });
+});
+function updateBestTime(currentTime) {
+  const bestTime = localStorage.getItem("bestTime");
+  if (!bestTime || currentTime < parseFloat(bestTime)) {
+    localStorage.setItem("bestTime", currentTime);
+  }
+}
+function showFinalMessage(totalTime) {
+  const bestTime = localStorage.getItem("bestTime");
   const popup = document.createElement("div");
-  popup.textContent = " All Cards Matched ! You Win ! ";
+  popup.innerHTML = `
+    <p style="margin:0; font-size:1.4rem;">🎉 All Cards Matched! You Win!</p>
+    <p style="color:#90f5f9; margin:10px 0 5px;">⏱ Time Taken: ${totalTime} seconds</p>
+    <p style="color:#00ffcc;">🏆 Best Time: ${bestTime ? bestTime + " seconds" : totalTime + " seconds"}</p>
+  `;
   popup.style.position = "fixed";
   popup.style.top = "50%";
   popup.style.left = "50%";
   popup.style.transform = "translate(-50%, -50%)";
   popup.style.background = "rgba(0, 0, 0, 0.85)";
   popup.style.color = "#00ffcc";
-  popup.style.padding = "20px 30px";
+  popup.style.padding = "25px 35px";
   popup.style.borderRadius = "10px";
   popup.style.fontSize = "1.3rem";
   popup.style.fontWeight = "bold";
@@ -28,67 +90,24 @@ function showFinalMessage() {
   btn.addEventListener("click", () => {
     popup.remove();
     resetGame();
-    shuffleCards(); 
   });
   popup.appendChild(document.createElement("br"));
   popup.appendChild(btn);
   document.body.appendChild(popup);
-}
-function shuffleCards() {
-  const cardsContainer = document.querySelector(".cards");
-  const cardsArray = Array.from(cardsContainer.children);
-  const shuffled = cardsArray.sort(() => Math.random() - 0.5);
-  shuffled.forEach(card => cardsContainer.appendChild(card));
 }
 function resetGame() {
   const cards = document.querySelectorAll(".card");
   cards.forEach((card) => {
     card.classList.remove("checked", "clicked", "shake");
   });
+  startTime = null;
+  endTime = null;
+  const cardsContainer = document.querySelector(".cards");
+  const cardsArray = Array.from(cardsContainer.children);
+  cardsArray.sort(() => Math.random() - 0.5);
+  cardsArray.forEach(card => cardsContainer.appendChild(card));
 }
-let counter = 0;
-let firstSelection = "";
-let secondSelection = "";
-const cards = document.querySelectorAll(".cards .card");
-cards.forEach((card) => {
-  card.addEventListener("click", () => {
-    card.classList.add("clicked");
-    if (counter === 0) {
-      firstSelection = card.getAttribute("logo");
-      counter++;
-    } else {
-      secondSelection = card.getAttribute("logo");
-      counter = 0;
-      if (firstSelection === secondSelection) {
-        const correctCards = document.querySelectorAll(
-          ".card[logo='" + firstSelection + "']"
-        );
-        setTimeout(() => {
-          correctCards[0].classList.add("checked");
-          correctCards[0].classList.remove("clicked");
-          correctCards[1].classList.add("checked");
-          correctCards[1].classList.remove("clicked");
-          const allCards = document.querySelectorAll(".card").length;
-          const matchedCards = document.querySelectorAll(".card.checked").length;
-          if (allCards === matchedCards) {
-            setTimeout(() => showFinalMessage(), 300);
-          }
-        }, 500);
-      } else {
-        const incorrectCards = document.querySelectorAll(".card.clicked");
-        incorrectCards[0].classList.add("shake");
-        incorrectCards[1].classList.add("shake");
-        setTimeout(() => {
-          incorrectCards[0].classList.remove("shake");
-          incorrectCards[0].classList.remove("clicked");
-          incorrectCards[1].classList.remove("shake");
-          incorrectCards[1].classList.remove("clicked");
-        }, 800);
-      }
-    }
-  });
-});
-window.addEventListener("load", shuffleCards);
+
 
 
 
