@@ -28,10 +28,17 @@ function showFinalMessage() {
   btn.addEventListener("click", () => {
     popup.remove();
     resetGame();
+    shuffleCards(); 
   });
   popup.appendChild(document.createElement("br"));
   popup.appendChild(btn);
   document.body.appendChild(popup);
+}
+function shuffleCards() {
+  const cardsContainer = document.querySelector(".cards");
+  const cardsArray = Array.from(cardsContainer.children);
+  const shuffled = cardsArray.sort(() => Math.random() - 0.5);
+  shuffled.forEach(card => cardsContainer.appendChild(card));
 }
 function resetGame() {
   const cards = document.querySelectorAll(".card");
@@ -81,6 +88,8 @@ cards.forEach((card) => {
     }
   });
 });
+window.addEventListener("load", shuffleCards);
+
 
 
 
