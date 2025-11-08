@@ -1,0 +1,108 @@
+.container{
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #010024, #050f2c);
+    min-height: 100vh;
+}
+.container h1{
+    text-align: center;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 3.5rem;
+    font-weight: 500;
+    color: #90f5f9;
+}
+.cards{
+  display: grid;
+  grid-template-columns: repeat(4, 100px);
+  grid-gap: 15px;
+  margin: 10px 10px;
+}
+.card{
+  height: 120px;
+  width: 100px;
+  background: #90f5f9;
+  border: 1px solid #90f5f7;
+  box-shadow: 0 0  80px #49f0f9;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .3s ease;     
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover{ transform: scale(1.03);
+background:#2df4fa;
+box-shadow:  0 0 80px;}
+.card img{
+  width: 100%;
+  height: 100%;
+  transition: all .3s ease;
+  opacity: 0;
+  object-fit: cover;
+}
+.card.clicked{
+  background-image: none;
+  background-color: #daeafd;
+}
+.card.clicked img{
+  opacity: 1;
+}
+.card.checked {
+  transform: scale(1.1);
+  background-color: #35fb7e;
+  transform: rotateY(180deg);
+}
+.card.checked::after {
+  content: "✔";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateY(180deg);
+  color: #03c7a0;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 0 0 8px #00ffcc, 0 0 15px #00ffcc, 0 0 25px #00ffcc;
+}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  50% { transform: translateX(8px); }
+  75% { transform: translateX(-6px); }
+  100% { transform: translateX(0); }
+}
+.card.shake img{
+  opacity: 0.5;
+}
+.card.shake {
+  animation: shake 0.5s;
+  box-shadow: 0 0 80px;
+  transform:rotateY(360deg);
+  background-color: red;
+}
+.card.shake::after{
+  content: "X";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateY(180deg);
+  color: #f30606;
+  font-size: 2rem;
+  font-weight: bold;
+  text-shadow: 0 0 8px #ff1100, 0 0 15px #ff1100, 0 0 25px #ff1100;
+} 
+@media(max-width:500px){
+  .cards{
+    grid-template-columns: repeat(4, 70px);
+    grid-gap: 10px;
+    margin: 10px 5px;
+  }
+  .card{
+    height: 90px;
+    width: 70px;
+  }
+  .container h1{
+    font-size: 2.5rem;
+  }
+}
