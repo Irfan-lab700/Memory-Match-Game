@@ -39,9 +39,8 @@ Match all pairs to win the game!
  https://memory-matched-game.netlify.app/
 
  Author
- Irfan khan
- 
 
 Irfan Khan
+
 GitHub : https://github.com/Irfan-lab700
 LinkedIn : www.linkedin.com/in/irfan-khan-92185031b
