@@ -35,8 +35,8 @@ Match all pairs to win the game!
 
  Live Demo
 
-🔗 Play Now on Netlify
- https://memory-matched-game.netlify.app/
+🔗 Play Now 
+https://irfan-lab700.github.io/Memory-Match-Game/
 
  Author
 
