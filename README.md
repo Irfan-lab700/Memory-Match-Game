@@ -36,7 +36,7 @@ Match all pairs to win the game!
  Live Demo
 
 🔗 Play Now 
-https://irfan-lab700.github.io/Memory-Match-Game/
+https://memory-match-game-steel.vercel.app/
 
  Author
 
